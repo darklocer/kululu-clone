@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Keepsake mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F5F7F8;--surface:#fff;--ink:#172330;--muted:#6B7885;--line:#E3E8EC;--cobalt:#3558F0;--glass:#CFEBE1;--sun:#FFC94A}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 "DM Sans",system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque",sans-serif;letter-spacing:-.02em;font-weight:600}
+button{font:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:2px solid var(--cobalt);outline-offset:2px}
+.top{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;background:var(--surface);border-bottom:1px solid var(--line)}
+.brand{font:700 20px "Bricolage Grotesque";letter-spacing:-.03em;display:flex;align-items:center;gap:8px}
+.brand i{width:14px;height:14px;border:2px solid var(--cobalt);border-radius:5px;display:inline-block;position:relative}
+.brand i:after{content:"";position:absolute;inset:2px;background:var(--sun);border-radius:2px}
+.event{color:var(--muted)}
+.btn{border-radius:999px;padding:9px 18px;border:1px solid var(--ink);background:none;color:var(--ink);font-weight:500}
+.btn.p{background:var(--cobalt);border-color:var(--cobalt);color:#fff}
+.tabs{display:flex;gap:4px;padding:6px;background:var(--surface);border:1px solid var(--line);border-radius:999px;width:max-content;margin:24px auto 0;max-width:calc(100% - 32px);overflow:auto}
+.tab{border:0;background:none;padding:8px 16px;border-radius:999px;color:var(--muted);white-space:nowrap}
+.tab[aria-selected=true]{background:var(--ink);color:#fff}
+main{max-width:1200px;margin:0 auto;padding:24px 16px 64px}
+section[hidden]{display:none}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px}
+.hero{display:grid;grid-template-columns:1.4fr 1fr;overflow:hidden}
+.cover{min-height:260px;background:linear-gradient(135deg,#9CC9D9,#CFEBE1 55%,#F6E3B0)}
+.hero .t{padding:32px}
+.hero h1{font-size:34px;line-height:1.1;margin-bottom:6px}
+.stats{display:flex;gap:28px;margin-top:24px}
+.stats b{font:600 26px "Bricolage Grotesque";display:block}
+.stats span{color:var(--muted);font-size:13px}
+.tools{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:16px 0 28px}
+.tool{padding:20px;text-align:left;transition:border-color .15s}
+.tool:hover{border-color:var(--cobalt)}
+.tool h3{font-size:18px;margin:10px 0 4px}
+.tool p{color:var(--muted);font-size:14px}
+.ic{width:36px;height:36px;border-radius:10px;background:var(--glass);display:grid;place-items:center;font-weight:700;color:var(--ink)}
+.grid{columns:4 180px;column-gap:10px}
+.ph{border-radius:6px;margin-bottom:10px;break-inside:avoid;position:relative;background:var(--c,#cfd9df)}
+.drop{border:1.5px dashed #B7C3CC;border-radius:6px;padding:28px 12px;text-align:center;color:var(--muted);margin-bottom:10px;break-inside:avoid}
+.face{position:absolute;border:2px solid var(--sun);border-radius:6px;width:26%;aspect-ratio:1;opacity:0;transition:opacity .15s}
+.ph:hover .face,.ph.on .face{opacity:1}
+.layout{display:grid;grid-template-columns:260px 1fr;gap:20px}
+.side{padding:16px;max-height:640px;overflow:auto}
+.side h3{font-size:16px;margin-bottom:12px}
+.person{display:flex;align-items:center;gap:10px;padding:8px;border-radius:10px;width:100%;border:0;background:none;text-align:left}
+.person[aria-pressed=true]{background:var(--glass)}
+.av{width:40px;height:40px;border-radius:50%;background:var(--c);border:2px solid var(--surface);box-shadow:0 0 0 1.5px var(--sun)}
+.person small{color:var(--muted);display:block;line-height:1.2}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px;font-size:14px}
+.chip[aria-pressed=true]{border-color:var(--cobalt);color:var(--cobalt);background:#fff}
+.note{margin-left:auto;color:var(--muted);font-size:13px}
+.col3{display:grid;grid-template-columns:230px 1fr 260px;gap:20px;align-items:start}
+.fmt{display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;border:1px solid var(--line);width:100%;background:var(--surface);margin-bottom:8px;text-align:left}
+.fmt[aria-pressed=true]{background:var(--glass);border-color:var(--cobalt)}
+.shape{border:1.5px solid var(--ink);border-radius:3px;flex:none}
+.fmt small{color:var(--muted);display:block;line-height:1.2}
+.stage{background:#E9EEF1;border-radius:14px;padding:32px;display:grid;place-items:center;min-height:560px}
+.canvas{background:#fff;padding:10px;display:grid;gap:8px;width:var(--w);aspect-ratio:var(--r);transition:all .25s;border-radius:4px;box-shadow:0 1px 0 var(--line)}
+.canvas div{border-radius:4px;background:var(--c)}
+label{display:block;font-size:13px;color:var(--muted);margin:14px 0 4px}
+input[type=range]{width:100%;accent-color:var(--cobalt)}
+.sw{display:flex;gap:8px}
+.sw i{width:26px;height:26px;border-radius:50%;border:1px solid var(--line)}
+.phones{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+.phone{background:#E9EEF1;border-radius:14px;padding:16px;text-align:center}
+.phone .scr{aspect-ratio:9/14;max-height:420px;margin:8px auto 0;border-radius:18px;background:var(--c);border:6px solid var(--ink)}
+.tl{height:34px;background:var(--bg);border-radius:8px;position:relative;margin:14px 0 6px;border:1px solid var(--line)}
+.tl i{position:absolute;top:4px;bottom:4px;width:3px;background:var(--cobalt);border-radius:2px}
+.vid{display:flex;gap:12px;padding:10px;align-items:center;margin-bottom:10px}
+.vid .th{width:44px;height:64px;border-radius:8px;background:var(--c);flex:none}
+.vid small{color:var(--muted)}
+.tog{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.sw2{width:36px;height:20px;border-radius:999px;background:var(--cobalt);position:relative}
+.sw2:after{content:"";position:absolute;right:2px;top:2px;width:16px;height:16px;border-radius:50%;background:#fff}
+@media(max-width:900px){.hero,.layout,.col3,.phones{grid-template-columns:1fr}.tools{grid-template-columns:1fr}.top .event{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><i></i>Keepsake</div>
+  <div class="event">Meera and Dev's wedding</div>
+  <button class="btn p">Invite people</button>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="Screens">
+  <button class="tab" role="tab" aria-selected="true" data-t="home">Event home</button>
+  <button class="tab" role="tab" aria-selected="false" data-t="faces">Sort by faces</button>
+  <button class="tab" role="tab" aria-selected="false" data-t="collage">Collage maker</button>
+  <button class="tab" role="tab" aria-selected="false" data-t="video">Remix a video</button>
+</nav>
+
+<main>
+<!-- HOME -->
+<section id="home">
+  <div class="card hero">
+    <div class="cover" role="img" aria-label="Event cover photo"></div>
+    <div class="t">
+      <h1>Meera and Dev's wedding</h1>
+      <p class="event">12 October 2026 · Kochi</p>
+      <div class="stats">
+        <div><b>1,284</b><span>photos</span></div>
+        <div><b>46</b><span>videos</span></div>
+        <div><b>38</b><span>people</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="tools">
+    <button class="card tool" data-go="faces"><div class="ic">◎</div><h3>Sort by faces</h3><p>Group every photo by who is in it.</p></button>
+    <button class="card tool" data-go="collage"><div class="ic">▦</div><h3>Make a collage</h3><p>Story, post or frame, ready in a click.</p></button>
+    <button class="card tool" data-go="video"><div class="ic">▷</div><h3>Remix a video</h3><p>Copy the cuts and style of a reference.</p></button>
+  </div>
+  <h2 style="font-size:20px;margin-bottom:14px">All uploads</h2>
+  <div class="grid" id="homeGrid"></div>
+</section>
+
+<!-- FACES -->
+<section id="faces" hidden>
+  <div class="layout">
+    <aside class="card side">
+      <h3>People</h3>
+      <div id="people"></div>
+    </aside>
+    <div>
+      <div class="bar">
+        <button class="chip" aria-pressed="true">Everyone</button>
+        <button class="chip" aria-pressed="false">Groups</button>
+        <button class="chip" aria-pressed="false">Solo</button>
+        <span class="note">Face matching stays inside this event.</span>
+        <button class="btn">Merge people</button>
+        <button class="btn p">Download photos</button>
+      </div>
+      <div class="grid" id="faceGrid"></div>
+    </div>
+  </div>
+</section>
+
+<!-- COLLAGE -->
+<section id="collage" hidden>
+  <div class="col3">
+    <aside class="card side">
+      <h3>Format</h3>
+      <div id="formats"></div>
+    </aside>
+    <div class="stage"><div class="canvas" id="canvas"></div></div>
+    <aside class="card side">
+      <h3>Photos</h3>
+      <div class="bar"><button class="chip" aria-pressed="true">Auto-pick</button><button class="chip" aria-pressed="false">By person</button><button class="chip" aria-pressed="false">Manual</button></div>
+      <label>Spacing</label><input type="range" min="0" max="24" value="8" id="gap">
+      <label>Corner roundness</label><input type="range" min="0" max="20" value="4" id="rad">
+      <label>Background</label>
+      <div class="sw"><i style="background:#fff" data-bg="#fff"></i><i style="background:#F5F7F8" data-bg="#F5F7F8"></i><i style="background:#CFEBE1" data-bg="#CFEBE1"></i><i style="background:#172330" data-bg="#172330"></i></div>
+      <div style="display:grid;gap:8px;margin-top:20px">
+        <button class="btn p">Make collage</button>
+        <button class="btn" id="shuffle">Shuffle layout</button>
+        <button class="btn">Download</button>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- VIDEO -->
+<section id="video" hidden>
+  <div class="col3">
+    <aside class="card side">
+      <h3>Reference videos</h3>
+      <button class="btn" style="width:100%;margin-bottom:12px">Share a reference</button>
+      <div class="card vid"><div class="th" style="--c:#9CC9D9"></div><div><b>Slow-mo entrance</b><br><small>by Aarav · 14 cuts</small></div></div>
+      <div class="card vid"><div class="th" style="--c:#F6E3B0"></div><div><b>Beat-synced recap</b><br><small>by Meera · 22 cuts</small></div></div>
+      <div class="card vid"><div class="th" style="--c:#CFEBE1"></div><div><b>Day in 30 seconds</b><br><small>by Dev · 9 cuts</small></div></div>
+    </aside>
+    <div>
+      <div class="phones">
+        <div class="phone"><b>Reference</b><div class="scr" style="--c:#9CC9D9"></div></div>
+        <div class="phone"><b>Your edit</b><div class="scr" style="--c:#CFEBE1"></div></div>
+      </div>
+      <div class="tl"><i style="left:12%"></i><i style="left:27%"></i><i style="left:41%"></i><i style="left:58%"></i><i style="left:73%"></i><i style="left:88%"></i></div>
+      <small class="event">14 cuts found · 0:00 to 0:28</small>
+    </div>
+    <aside class="card side">
+      <h3>Found in the reference</h3>
+      <div class="tog"><span>Match the cuts</span><span class="sw2"></span></div>
+      <div class="tog"><span>Use the same transitions</span><span class="sw2"></span></div>
+      <div class="tog"><span>Copy text overlays</span><span class="sw2"></span></div>
+      <div class="tog"><span>Keep my music</span><span class="sw2"></span></div>
+      <button class="btn p" style="width:100%;margin-top:20px">Apply to my clips</button>
+    </aside>
+  </div>
+</section>
+</main>
+
+<script>
+const cols=['#9CC9D9','#CFEBE1','#F6E3B0','#B8C7E8','#D9E6C3','#C9D6DE','#E7D3B8','#A9D3CC'];
+const h=[180,240,150,210,260,170,230,190,150,250,200,160];
+const mk=(n,faces)=>h.slice(0,n).map((x,i)=>`<div class="ph" style="height:${x}px;--c:${cols[i%cols.length]}">${faces?`<span class="face" style="left:${20+(i*13)%40}%;top:${18+(i*7)%30}%"></span>`:''}</div>`).join('');
+document.getElementById('homeGrid').innerHTML='<div class="drop">Drop photos or connect a folder</div>'+mk(12,true);
+const names=[['Meera',212],['Dev',198],['Aarav',87],['Nila',64],['Unnamed person 3',31]];
+document.getElementById('people').innerHTML=names.map((n,i)=>`<button class="person" aria-pressed="${i==0}"><span class="av" style="--c:${cols[i]}"></span><span><b>${n[0]}</b><small>${n[1]} photos</small></span></button>`).join('');
+const fg=document.getElementById('faceGrid');fg.innerHTML=mk(12,true).replaceAll('class="ph"','class="ph on"');
+document.querySelectorAll('.person').forEach(b=>b.onclick=()=>{document.querySelectorAll('.person').forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true')});
+// tabs
+const show=id=>{document.querySelectorAll('main>section').forEach(s=>s.hidden=s.id!==id);document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t.dataset.t===id))};
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>show(t.dataset.t));
+document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>show(b.dataset.go));
+// collage
+const F=[['Instagram story','9:16','9/16','230px',[1,3,2]],['Instagram post','1:1','1/1','340px',[2,2,2]],['Photo frame','4:5','4/5','290px',[2,2,1]],['Print poster','A3','7/10','270px',[2,3,2]],['Phone wallpaper','9:19','9/19','200px',[1,3,1]]];
+const cv=document.getElementById('canvas');let cur=0,seed=0;
+function draw(){const f=F[cur];cv.style.setProperty('--w',f[3]);cv.style.setProperty('--r',f[2]);
+ const cells=f[4].reduce((a,b)=>a+b,0);cv.style.gridTemplateColumns='1fr 1fr';cv.style.gridAutoRows='1fr';
+ cv.innerHTML=Array.from({length:Math.min(cells,6)},(_,i)=>`<div style="--c:${cols[(i+seed)%cols.length]};${i==0?'grid-column:span 2':''}"></div>`).join('')}
+document.getElementById('formats').innerHTML=F.map((f,i)=>{const [a,b]=f[1].split(':');const r=a==='A3'?[28,40]:[+a>+b?40:+a*2.4,+b>+a?40:+b*2.4];return`<button class="fmt" aria-pressed="${i==0}" data-i="${i}"><span class="shape" style="width:${Math.min(r[0],30)}px;height:${Math.min(r[1],40)}px"></span><span><b>${f[0]}</b><small>${f[1]}</small></span></button>`}).join('');
+document.querySelectorAll('.fmt').forEach(b=>b.onclick=()=>{cur=+b.dataset.i;document.querySelectorAll('.fmt').forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');draw()});
+document.getElementById('gap').oninput=e=>{cv.style.gap=e.target.value+'px';cv.style.padding=e.target.value+'px'};
+document.getElementById('rad').oninput=e=>cv.querySelectorAll('div').forEach(d=>d.style.borderRadius=e.target.value+'px');
+document.querySelectorAll('[data-bg]').forEach(s=>s.onclick=()=>cv.style.background=s.dataset.bg);
+document.getElementById('shuffle').onclick=()=>{seed=(seed+3)%8;draw()};
+draw();
+</script>
+</body>
+</html>
